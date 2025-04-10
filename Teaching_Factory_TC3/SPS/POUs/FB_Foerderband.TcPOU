@@ -85,6 +85,7 @@ CASE nState OF
 	0:
 	eState:=eBetriebszustand.Off;
 	mc_power.Enable :=TRUE;
+	mc_Power.Enable_Positive :=TRUE;
 	
 	IF bEnable AND NOT mc_power.Status THEN
 		nState :=10;
@@ -94,17 +95,22 @@ CASE nState OF
 	
 	10: // init Reset
 	eState:=eBetriebszustand.Init;
+	
+	//nicht power resetten sonst durch if vor case in dauerschleife zwischen 0 und 11
+	//mc_Power.Enable:=FALSE;
+	//mc_Power.Enable_Positive:=FALSE;
+	
 	mc_Reset.Execute:=TRUE;
-	mc_Power.Enable:=FALSE;
 	
 	IF mc_Reset.Done THEN
 		nState:=11;
+		mc_Reset.Execute:=FALSE;
 	END_IF
 	
 	11: // init Power
 	eState:=eBetriebszustand.Init;
-	mc_Reset.Execute:=FALSE;
 	mc_Power.Enable:=TRUE;
+	mc_Power.Enable_Positive :=TRUE;
 	
 	IF mc_Power.Status THEN
 		nState:=20;
@@ -114,7 +120,7 @@ CASE nState OF
 	eState:= eBetriebszustand.Ready;
 	
 	IF bExecute THEN 
-		nState:=20;
+		nState:=30;
 	END_IF
  
 	30: // Kontinuierliche Bewegung
@@ -173,18 +179,26 @@ END_CASE]]></ST>
       <LineId Id="9" Count="0" />
       <LineId Id="23" Count="0" />
       <LineId Id="31" Count="1" />
+      <LineId Id="183" Count="0" />
       <LineId Id="60" Count="2" />
       <LineId Id="64" Count="0" />
       <LineId Id="66" Count="0" />
       <LineId Id="63" Count="0" />
       <LineId Id="33" Count="0" />
       <LineId Id="25" Count="0" />
-      <LineId Id="34" Count="2" />
-      <LineId Id="67" Count="3" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="187" Count="0" />
+      <LineId Id="189" Count="0" />
+      <LineId Id="184" Count="2" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="67" Count="2" />
+      <LineId Id="188" Count="0" />
+      <LineId Id="70" Count="0" />
       <LineId Id="37" Count="0" />
       <LineId Id="26" Count="0" />
-      <LineId Id="39" Count="1" />
+      <LineId Id="39" Count="0" />
       <LineId Id="38" Count="0" />
+      <LineId Id="181" Count="0" />
       <LineId Id="71" Count="1" />
       <LineId Id="75" Count="0" />
       <LineId Id="77" Count="0" />

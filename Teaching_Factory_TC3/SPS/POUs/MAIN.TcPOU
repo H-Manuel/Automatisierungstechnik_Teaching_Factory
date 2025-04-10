@@ -9,7 +9,9 @@ VAR
 	fb_EZylinder2 : FB_EZylinder;
 	fb_Ampelleuchte :FB_Ampelleuchte;
 	fb_Foerderband :FB_Foerderband;
-	
+	fb_Dispenser_Rot :FB_Dispenser;
+	fb_Dispenser_Gruen :FB_Dispenser;
+	fb_Dispenser_Blau :FB_Dispenser;
 	
 END_VAR
 ]]></Declaration>
@@ -25,7 +27,7 @@ fb_Vereinzelung(
 	bSens2:= IFC_HW.bEinzelSens2, 
 	bSens3:= IFC_HW.bEinzelSens3, 
 	bSens4:= IFC_HW.bBandSens1, 
-	eState=> fb_Ampelleuchte.eState_Vereinzelung, 
+	eState=> , 
 	bGate1=> fb_EZylinder1.bGate, 
 	bGate2=> fb_EZylinder2.bGate);
 	
@@ -33,14 +35,36 @@ fb_EZylinder1(bGate:= , bError:= , bR1=> IFC_HW.bR1AKT1, bR2=> IFC_HW.bR2AKT1);
 fb_EZylinder2(bGate:= , bError:= , bR1=> IFC_HW.bR1AKT2, bR2=> IFC_HW.bR2AKT2);
 
 fb_Foerderband(
-	bEnable:= , 
+	bEnable:= IFC_HW.bEnable, 
 	bExecute:= , 
 	bHalt:= , 
 	eState=> , 
 	ax:= IFC_HW.ax_BandMotor);
+	
+fb_Dispenser_Rot(
+	bEnable:= IFC_HW.bEnable, 
+	bExecute:= , 
+	rDistance:= 60, 
+	eState=> , 
+	ax:= IFC_HW.ax_Extruder1);
+	
+//fb_Dispenser_Gruen(
+//	bEnable:= IFC_HW.bEnable, 
+//	bExecute:= IFC_HW.bBandSens2, 
+//	rDistance:= 60, 
+//	eState=> , 
+//	ax:= IFC_HW.ax_Extruder2);
+//	
+//fb_Dispenser_Blau(
+//	bEnable:= IFC_HW.bEnable, 
+//	bExecute:= IFC_HW.bBandSens3, 
+//	rDistance:= 60, 
+//	eState=> , 
+//	ax:= IFC_HW.ax_Extruder3);
+//	
 
 
-fb_Ampelleuchte(eState_Vereinzelung:= , bAmpelGruen=> IFC_HW.bAmpelGrun, bAmpelRot=> IFC_HW.bAmpelRot, bAmpelGelb=> IFC_HW.bAmpelGelb);
+fb_Ampelleuchte(eState_Vereinzelung:= fb_Vereinzelung.eState, bAmpelGruen=> IFC_HW.bAmpelGrun, bAmpelRot=> IFC_HW.bAmpelRot, bAmpelGelb=> IFC_HW.bAmpelGelb);
 	
 ]]></ST>
     </Implementation>
@@ -55,7 +79,18 @@ fb_Ampelleuchte(eState_Vereinzelung:= , bAmpelGruen=> IFC_HW.bAmpelGrun, bAmpelR
       <LineId Id="107" Count="1" />
       <LineId Id="157" Count="0" />
       <LineId Id="160" Count="4" />
-      <LineId Id="158" Count="1" />
+      <LineId Id="158" Count="0" />
+      <LineId Id="196" Count="0" />
+      <LineId Id="179" Count="4" />
+      <LineId Id="178" Count="0" />
+      <LineId Id="197" Count="0" />
+      <LineId Id="185" Count="4" />
+      <LineId Id="184" Count="0" />
+      <LineId Id="198" Count="0" />
+      <LineId Id="191" Count="4" />
+      <LineId Id="190" Count="0" />
+      <LineId Id="212" Count="0" />
+      <LineId Id="159" Count="0" />
       <LineId Id="156" Count="0" />
       <LineId Id="109" Count="0" />
       <LineId Id="104" Count="0" />
