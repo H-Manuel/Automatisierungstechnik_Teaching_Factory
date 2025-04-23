@@ -17,9 +17,9 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[bStopper1 :=bStop1;
-bStopper2 :=bStop2;
-bStopper3 :=bStop3;
+      <ST><![CDATA[bStopper1 :=  bStop1;
+bStopper2 :=  bStop2;
+bStopper3 :=  bStop3;
 ]]></ST>
     </Implementation>
     <LineIds Name="FB_Transport_A">

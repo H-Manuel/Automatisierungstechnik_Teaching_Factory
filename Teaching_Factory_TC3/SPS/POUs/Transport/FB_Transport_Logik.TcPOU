@@ -11,6 +11,7 @@ VAR_INPUT
 	bStation1 :BOOL;
 	bStation2 :BOOL;
 	bStation3 :BOOL;
+	bStation4 :BOOL;
 END_VAR
 VAR_OUTPUT
 	bEnableA :BOOL;
@@ -83,7 +84,7 @@ CASE nState OF
 		bStop3 :=TRUE;		
 	END_IF
 	
-	IF (bStation1 AND (nStation =1)) OR (bStation2 AND (nStation =2)) OR (bStation3 AND (nStation =3)) THEN
+	IF (bStation1 AND (nStation =1)) OR (bStation2 AND (nStation =2)) OR (bStation3 AND (nStation =3)) OR (bStation4 AND (nStation =4))THEN
 		nState :=4;
 	END_IF
 	

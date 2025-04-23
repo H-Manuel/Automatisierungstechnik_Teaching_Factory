@@ -5,7 +5,7 @@
 VAR_INPUT
 	bEnable :BOOL;
 	bExecute :BOOL;
-	nStation :INT;
+	nStation :INT := 1;
 	//Hardweare Eingänge
 	bSens1 :BOOL;
 	bSens2 :BOOL;
@@ -48,6 +48,7 @@ fb_TransportLogik(
 	bStation1:= fb_TransportE.bStation1, 
 	bStation2:= fb_TransportE.bStation2, 
 	bStation3:= fb_TransportE.bStation3, 
+	bStation4:= fb_TransportE.bStation4,
 	bEnableA=> , 
 	bExecuteA=> , 
 	bStopA=> , 
@@ -70,15 +71,17 @@ fb_TransportA(
 	bStop2:= fb_TransportLogik.bStop2, 
 	bStop3:= fb_TransportLogik.bStop3, 
 	bStopper1=> bStopper1, 
-	bStopper2=> bStopper1, 
-	bStopper3=> bStopper1);]]></ST>
+	bStopper2=> bStopper2, 
+	bStopper3=> bStopper3);]]></ST>
     </Implementation>
     <LineIds Name="FB_Transport">
       <LineId Id="74" Count="0" />
       <LineId Id="33" Count="7" />
       <LineId Id="9" Count="0" />
       <LineId Id="41" Count="0" />
-      <LineId Id="43" Count="13" />
+      <LineId Id="43" Count="7" />
+      <LineId Id="127" Count="0" />
+      <LineId Id="51" Count="5" />
       <LineId Id="42" Count="0" />
       <LineId Id="57" Count="1" />
       <LineId Id="60" Count="4" />
