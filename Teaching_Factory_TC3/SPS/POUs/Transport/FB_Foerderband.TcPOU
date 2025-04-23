@@ -77,9 +77,12 @@ mc_Halt(
 	
 Timer(IN:= , PT:= T#1S, Q=> , ET=> );
 
-IF NOT mc_Power.Status THEN
-	nState:=0;
-END_IF
+
+//Originalcode funktioniert wenn hier die Flanke kontrolliert wird 
+//Anstelle vom Power.Status
+//IF NOT mc_Power.Status THEN
+//	nState:=0;
+//END_IF
 
 CASE nState OF 
 	0:
@@ -172,7 +175,9 @@ END_CASE]]></ST>
       <LineId Id="121" Count="11" />
       <LineId Id="86" Count="0" />
       <LineId Id="150" Count="1" />
+      <LineId Id="209" Count="1" />
       <LineId Id="160" Count="0" />
+      <LineId Id="211" Count="0" />
       <LineId Id="21" Count="0" />
       <LineId Id="44" Count="1" />
       <LineId Id="22" Count="0" />

@@ -13,6 +13,10 @@ VAR
 	fb_Dispenser_Gruen :FB_Dispenser;
 	fb_Dispenser_Blau :FB_Dispenser;
 	
+	
+	
+	
+	fb_Transport :FB_Transport;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -34,19 +38,19 @@ fb_Vereinzelung(
 fb_EZylinder1(bGate:= , bError:= , bR1=> IFC_HW.bR1AKT1, bR2=> IFC_HW.bR2AKT1);
 fb_EZylinder2(bGate:= , bError:= , bR1=> IFC_HW.bR1AKT2, bR2=> IFC_HW.bR2AKT2);
 
-fb_Foerderband(
-	bEnable:= IFC_HW.bEnable, 
-	bExecute:= , 
-	bHalt:= , 
-	eState=> , 
-	ax:= IFC_HW.ax_BandMotor);
+//fb_Foerderband(
+//	bEnable:= IFC_HW.bEnable, 
+//	bExecute:= , 
+//	bHalt:= , 
+//	eState=> , 
+//	ax:= IFC_HW.ax_BandMotor);
 	
-fb_Dispenser_Rot(
-	bEnable:= IFC_HW.bEnable, 
-	bExecute:= , 
-	rDistance:= 60, 
-	eState=> , 
-	ax:= IFC_HW.ax_Extruder1);
+//fb_Dispenser_Rot(
+//	bEnable:= IFC_HW.bEnable, 
+//	bExecute:= , 
+//	rDistance:= 60, 
+//	eState=> , 
+//	ax:= IFC_HW.ax_Extruder1);
 	
 //fb_Dispenser_Gruen(
 //	bEnable:= IFC_HW.bEnable, 
@@ -66,6 +70,24 @@ fb_Dispenser_Rot(
 
 fb_Ampelleuchte(eState_Vereinzelung:= fb_Vereinzelung.eState, bAmpelGruen=> IFC_HW.bAmpelGrun, bAmpelRot=> IFC_HW.bAmpelRot, bAmpelGelb=> IFC_HW.bAmpelGelb);
 	
+
+
+
+//Transport als gesamtes
+fb_Transport(
+	bEnable:= IFC_HW.bEnable, 
+	bExecute:= IFC_HW.bExecute, 
+	nStation:= , 
+	bSens1:= IFC_HW.bBandSens1, 
+	bSens2:= IFC_HW.bBandSens2, 
+	bSens3:= IFC_HW.bBandSens3, 
+	bSens4:= IFC_HW.bBandSens4, 
+	eState=> , 
+	bStopper1=> IFC_HW.bBandHub1, 
+	bStopper2=> IFC_HW.bBandHub2, 
+	bStopper3=> IFC_HW.bBandHub3, 
+	ax:= IFC_HW.ax_BandMotor);
+
 ]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
@@ -81,7 +103,7 @@ fb_Ampelleuchte(eState_Vereinzelung:= fb_Vereinzelung.eState, bAmpelGruen=> IFC_
       <LineId Id="160" Count="4" />
       <LineId Id="158" Count="0" />
       <LineId Id="196" Count="0" />
-      <LineId Id="179" Count="4" />
+      <LineId Id="248" Count="4" />
       <LineId Id="178" Count="0" />
       <LineId Id="197" Count="0" />
       <LineId Id="185" Count="4" />
@@ -94,6 +116,9 @@ fb_Ampelleuchte(eState_Vereinzelung:= fb_Vereinzelung.eState, bAmpelGruen=> IFC_
       <LineId Id="156" Count="0" />
       <LineId Id="109" Count="0" />
       <LineId Id="104" Count="0" />
+      <LineId Id="226" Count="3" />
+      <LineId Id="236" Count="11" />
+      <LineId Id="230" Count="1" />
       <LineId Id="132" Count="0" />
     </LineIds>
   </POU>
