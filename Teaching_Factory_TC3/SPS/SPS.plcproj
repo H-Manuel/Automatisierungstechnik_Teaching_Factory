@@ -21,6 +21,9 @@
     <Compile Include="DUTs\eBetriebszustand.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GVLs\GVL_PosKinematic.TcGVL">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GVLs\IFC_HW.TcGVL">
       <SubType>Code</SubType>
     </Compile>
@@ -28,6 +31,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Abfüllmodul\FB_Abfuellmodul.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Abfüllmodul\FB_Dispenser.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Abfüllmodul\FB_EZylinder.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Abfüllmodul\FB_Vereinzelung.TcPOU">
@@ -48,25 +57,25 @@
     <Compile Include="POUs\Abfüllmodul\Transport\FB_Transport_Logik.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FB_Ampelleuchte.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\FB_Blinklicht.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\FB_Dispenser.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\FB_EZylinder.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\FB_Maschinentuer.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\FB_Vereinzelung_Prozess.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Manipulator\Roboter\FB_Roboter.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Manipulator\Roboter\FB_Roboter_Axis.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Manipulator\Roboter\FB_Roboter_E.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Manipulator\Roboter\FB_Roboter_Logik.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Statusleuchte\FB_Ampelleuchte.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Statusleuchte\FB_Blinklicht.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -75,6 +84,9 @@
     <Folder Include="GVLs" />
     <Folder Include="POUs\Abfüllmodul" />
     <Folder Include="POUs\Abfüllmodul\Transport" />
+    <Folder Include="POUs\Manipulator" />
+    <Folder Include="POUs\Manipulator\Roboter" />
+    <Folder Include="POUs\Statusleuchte" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>

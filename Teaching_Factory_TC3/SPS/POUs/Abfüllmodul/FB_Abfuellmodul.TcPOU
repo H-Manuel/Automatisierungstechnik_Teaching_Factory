@@ -15,13 +15,60 @@ VAR
 	fb_Dispenser1 :FB_Dispenser;
 	fb_Dispenser2 :FB_Dispenser;
 	fb_Dispenser3 :FB_Dispenser;
+	fb_EZylinder1 : FB_EZylinder;
+	fb_EZylinder2 : FB_EZylinder;
 	
 	nState :INT;
 	nStation :INT;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[CASE nState OF
+      <ST><![CDATA[fb_Vereinzelung(
+	bEnable:= IFC_HW.bEnable, 
+	bExecute:= IFC_HW.bExecute, 
+	bSens1:= IFC_HW.bEinzelSens1, 
+	bSens2:= IFC_HW.bEinzelSens2, 
+	bSens3:= IFC_HW.bEinzelSens3, 
+	bSens4:= IFC_HW.bBandSens1, 
+	eState=> , 
+	bGate1=> fb_EZylinder1.bGate, 
+	bGate2=> fb_EZylinder2.bGate);
+	
+fb_Transport(
+	bEnable:= IFC_HW.bEnable, 
+	bExecute:= IFC_HW.bExecute, 
+	nStation:= , 
+	bSens1:= IFC_HW.bBandSens1, 
+	bSens2:= IFC_HW.bBandSens2, 
+	bSens3:= IFC_HW.bBandSens3, 
+	bSens4:= IFC_HW.bBandSens4, 
+	eState=> , 
+	bStopper1=> IFC_HW.bBandHub1, 
+	bStopper2=> IFC_HW.bBandHub2, 
+	bStopper3=> IFC_HW.bBandHub3, 
+	ax:= IFC_HW.ax_BandMotor);
+	
+fb_Dispenser1(
+	bEnable:= , 
+	bExecute:= , 
+	rDistance:= 60, 
+	eState=> , 
+	ax:= IFC_HW.ax_Extruder1);
+fb_Dispenser2(
+	bEnable:= , 
+	bExecute:= , 
+	rDistance:= 60, 
+	eState=> , 
+	ax:= IFC_HW.ax_Extruder2);
+fb_Dispenser3(
+	bEnable:= , 
+	bExecute:= , 
+	rDistance:= 60, 
+	eState=> , 
+	ax:= IFC_HW.ax_Extruder3);
+
+
+CASE nState OF
 	0: // Off
 	eState := eBetriebszustand.Off;
 	
@@ -201,6 +248,19 @@ END_VAR
 END_CASE]]></ST>
     </Implementation>
     <LineIds Name="FB_Abfuellmodul">
+      <LineId Id="270" Count="8" />
+      <LineId Id="226" Count="0" />
+      <LineId Id="238" Count="0" />
+      <LineId Id="281" Count="11" />
+      <LineId Id="239" Count="0" />
+      <LineId Id="293" Count="0" />
+      <LineId Id="253" Count="4" />
+      <LineId Id="252" Count="0" />
+      <LineId Id="259" Count="4" />
+      <LineId Id="258" Count="0" />
+      <LineId Id="265" Count="4" />
+      <LineId Id="264" Count="0" />
+      <LineId Id="227" Count="1" />
       <LineId Id="9" Count="0" />
       <LineId Id="22" Count="0" />
       <LineId Id="30" Count="1" />
