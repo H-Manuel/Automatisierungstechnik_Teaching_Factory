@@ -15,12 +15,12 @@ VAR
 	
 	
 	
-	
+	value : Real;
 	fb_Transport :FB_Transport;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[
+      <ST><![CDATA[value :=TO_UINT(FUN_Scale(4096,4096,0,350,0));
 
 
 
