@@ -52,7 +52,7 @@ fb_TransportLogik(
 	bEnableA=> , 
 	bExecuteA=> , 
 	bStopA=> , 
-	eStateA=> , 
+	eStateA=> eState, 
 	bStop1=> , 
 	bStop2=> , 
 	bStop3=> );

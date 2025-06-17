@@ -17,6 +17,7 @@ VAR
 	fb_Dispenser3 :FB_Dispenser;
 	fb_EZylinder1 : FB_EZylinder;
 	fb_EZylinder2 : FB_EZylinder;
+
 	
 	nState :INT;
 	nStation :INT;
@@ -24,8 +25,8 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[fb_Vereinzelung(
-	bEnable:= IFC_HW.bEnable, 
-	bExecute:= IFC_HW.bExecute, 
+	bEnable:= , 
+	bExecute:= , 
 	bSens1:= IFC_HW.bEinzelSens1, 
 	bSens2:= IFC_HW.bEinzelSens2, 
 	bSens3:= IFC_HW.bEinzelSens3, 
@@ -35,9 +36,9 @@ END_VAR
 	bGate2=> fb_EZylinder2.bGate);
 	
 fb_Transport(
-	bEnable:= IFC_HW.bEnable, 
-	bExecute:= IFC_HW.bExecute, 
-	nStation:= , 
+	bEnable:= , 
+	bExecute:= , 
+	nStation:= nStation, 
 	bSens1:= IFC_HW.bBandSens1, 
 	bSens2:= IFC_HW.bBandSens2, 
 	bSens3:= IFC_HW.bBandSens3, 
@@ -51,21 +52,29 @@ fb_Transport(
 fb_Dispenser1(
 	bEnable:= , 
 	bExecute:= , 
-	rDistance:= 60, 
+	rDistance:= IFC_HW.iBandFullmenge1*20, 
 	eState=> , 
 	ax:= IFC_HW.ax_Extruder1);
 fb_Dispenser2(
 	bEnable:= , 
 	bExecute:= , 
-	rDistance:= 60, 
+	rDistance:= IFC_HW.iBandFullmenge1*20, 
 	eState=> , 
 	ax:= IFC_HW.ax_Extruder2);
 fb_Dispenser3(
 	bEnable:= , 
 	bExecute:= , 
-	rDistance:= 60, 
+	rDistance:= IFC_HW.iBandFullmenge1*20, 
 	eState=> , 
 	ax:= IFC_HW.ax_Extruder3);
+	
+fb_EZylinder1(bGate:= , bError:= , bR1=> IFC_HW.bR1AKT1, bR2=> IFC_HW.bR2AKT1);
+fb_EZylinder2(bGate:= , bError:= , bR1=> IFC_HW.bR1AKT2, bR2=> IFC_HW.bR2AKT2);
+
+
+IF NOT bEnable THEN 
+	nState :=0;
+END_IF
 
 
 CASE nState OF
@@ -126,17 +135,12 @@ CASE nState OF
 	30:// Start
 	eState := eBetriebszustand.Production;
 	
-	//fb_Vereinzelung.bEnable:=TRUE;
-	//fb_Transport.bEnable :=TRUE;
-	//fb_Dispenser1.bEnable :=TRUE;
-	//fb_Dispenser2.bEnable :=TRUE;
-	//fb_Dispenser3.bEnable :=TRUE;
 	fb_Vereinzelung.bExecute :=TRUE;
 	fb_Transport.bExecute :=TRUE;
 	fb_Dispenser1.bExecute :=FALSE;
 	fb_Dispenser2.bExecute :=FALSE;
 	fb_Dispenser3.bExecute :=FALSE;
-	nstation :=1;
+	nStation :=1;
 	
 	IF (fb_Vereinzelung.eState = eBetriebszustand.Done) AND (fb_Transport.eState = eBetriebszustand.Done) THEN
 		nstate :=31;
@@ -145,17 +149,12 @@ CASE nState OF
 	31:// Dispenser1
 	eState := eBetriebszustand.Production;
 	
-	//fb_Vereinzelung.bEnable:=TRUE;
-	//fb_Transport.bEnable :=TRUE;
-	//fb_Dispenser1.bEnable :=TRUE;
-	//fb_Dispenser2.bEnable :=TRUE;
-	//fb_Dispenser3.bEnable :=TRUE;
 	fb_Vereinzelung.bExecute :=FALSE;
 	fb_Transport.bExecute :=FALSE;
 	fb_Dispenser1.bExecute :=TRUE;
 	fb_Dispenser2.bExecute :=FALSE;
 	fb_Dispenser3.bExecute :=FALSE;
-	nstation :=1;
+	nStation :=1;
 	
 	IF fb_Dispenser1.eState = eBetriebszustand.Done THEN
 		nState :=32;
@@ -164,7 +163,7 @@ CASE nState OF
 	32:// Bewegung zu Dispenser2
 	eState := eBetriebszustand.Production;
 	
-	nstation :=2;
+	nStation :=2;
 	fb_Vereinzelung.bExecute :=FALSE;
 	fb_Transport.bExecute :=TRUE;
 	fb_Dispenser1.bExecute :=FALSE;
@@ -183,7 +182,7 @@ CASE nState OF
 	fb_Dispenser1.bExecute :=FALSE;
 	fb_Dispenser2.bExecute :=TRUE;
 	fb_Dispenser3.bExecute :=FALSE;
-	nstation :=2;
+	nStation :=2;
 	
 	IF fb_Dispenser2.eState = eBetriebszustand.Done THEN
 		nState :=34;
@@ -192,7 +191,7 @@ CASE nState OF
 	34:// Bewegung zu Dispenser3
 	eState := eBetriebszustand.Production;
 	
-	nstation :=3;
+	nStation :=3;
 	fb_Vereinzelung.bExecute :=FALSE;
 	fb_Transport.bExecute :=TRUE;
 	fb_Dispenser1.bExecute :=FALSE;
@@ -211,7 +210,7 @@ CASE nState OF
 	fb_Dispenser1.bExecute :=FALSE;
 	fb_Dispenser2.bExecute :=FALSE;
 	fb_Dispenser3.bExecute :=TRUE;
-	nstation :=3;
+	nStation :=3;
 	
 	IF fb_Dispenser3.eState = eBetriebszustand.Done THEN
 		nState :=36;
@@ -220,7 +219,7 @@ CASE nState OF
 	36:// Abholstation
 	eState := eBetriebszustand.Production;
 	
-	nstation :=4;
+	nStation :=4;
 	fb_Vereinzelung.bExecute :=FALSE;
 	fb_Transport.bExecute :=TRUE;
 	fb_Dispenser1.bExecute :=FALSE;
@@ -240,8 +239,8 @@ CASE nState OF
 	fb_Dispenser2.bExecute :=FALSE;
 	fb_Dispenser3.bExecute :=FALSE;
 	
-	IF NOT bExecute THEN
-		nState :=30;
+	IF not bExecute THEN
+		nState :=20;
 	END_IF
 	
 	
@@ -260,6 +259,13 @@ END_CASE]]></ST>
       <LineId Id="258" Count="0" />
       <LineId Id="265" Count="4" />
       <LineId Id="264" Count="0" />
+      <LineId Id="314" Count="0" />
+      <LineId Id="316" Count="0" />
+      <LineId Id="315" Count="0" />
+      <LineId Id="321" Count="0" />
+      <LineId Id="319" Count="0" />
+      <LineId Id="318" Count="0" />
+      <LineId Id="343" Count="1" />
       <LineId Id="227" Count="1" />
       <LineId Id="9" Count="0" />
       <LineId Id="22" Count="0" />
@@ -280,13 +286,15 @@ END_CASE]]></ST>
       <LineId Id="57" Count="10" />
       <LineId Id="56" Count="0" />
       <LineId Id="73" Count="5" />
-      <LineId Id="80" Count="11" />
+      <LineId Id="80" Count="1" />
+      <LineId Id="87" Count="4" />
       <LineId Id="95" Count="0" />
       <LineId Id="92" Count="0" />
       <LineId Id="96" Count="1" />
       <LineId Id="79" Count="0" />
       <LineId Id="98" Count="0" />
-      <LineId Id="100" Count="16" />
+      <LineId Id="100" Count="2" />
+      <LineId Id="108" Count="8" />
       <LineId Id="99" Count="0" />
       <LineId Id="117" Count="4" />
       <LineId Id="123" Count="3" />
@@ -302,7 +310,8 @@ END_CASE]]></ST>
       <LineId Id="165" Count="0" />
       <LineId Id="180" Count="2" />
       <LineId Id="188" Count="1" />
-      <LineId Id="184" Count="3" />
+      <LineId Id="317" Count="0" />
+      <LineId Id="185" Count="2" />
       <LineId Id="183" Count="0" />
       <LineId Id="192" Count="2" />
       <LineId Id="190" Count="0" />

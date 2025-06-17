@@ -32,6 +32,10 @@ END_VAR
     <Implementation>
       <ST><![CDATA[//Zustandsgraphen aus PP selber gezeichent implementieren 
 
+IF NOT bEnable THEN
+	nState :=0;
+END_IF
+
 CASE nState OF 
 	0: //off
 	eStateA:= eBetriebszustand.Off;
@@ -110,6 +114,9 @@ END_CASE]]></ST>
     </Implementation>
     <LineIds Name="FB_Transport_Logik">
       <LineId Id="9" Count="0" />
+      <LineId Id="139" Count="0" />
+      <LineId Id="141" Count="1" />
+      <LineId Id="140" Count="0" />
       <LineId Id="31" Count="0" />
       <LineId Id="30" Count="0" />
       <LineId Id="32" Count="0" />

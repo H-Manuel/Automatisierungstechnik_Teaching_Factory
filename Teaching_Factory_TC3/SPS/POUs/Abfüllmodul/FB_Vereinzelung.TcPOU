@@ -27,7 +27,11 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[fbTON(IN:= , PT:= T#1S, Q=> , ET=> );
+      <ST><![CDATA[fbTON(IN:= , PT:= T#2S, Q=> , ET=> );
+
+IF NOT bEnable THEN
+	nState :=0;
+END_IF
 
 CASE nState OF
 	100: //Off oder nicht BEtriebsbereit 
@@ -118,7 +122,10 @@ CASE nState OF
 END_CASE]]></ST>
     </Implementation>
     <LineIds Name="FB_Vereinzelung">
-      <LineId Id="28" Count="1" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="143" Count="0" />
+      <LineId Id="168" Count="2" />
+      <LineId Id="29" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="30" Count="0" />
       <LineId Id="49" Count="3" />

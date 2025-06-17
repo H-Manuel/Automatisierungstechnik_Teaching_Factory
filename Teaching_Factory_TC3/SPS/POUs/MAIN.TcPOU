@@ -3,123 +3,104 @@
   <POU Name="MAIN" Id="{bdcd83ff-4f15-4910-8ed3-f4b8d9a489d3}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-
-	fb_Vereinzelung :FB_Vereinzelung;
-	fb_EZylinder1 : FB_EZylinder;
-	fb_EZylinder2 : FB_EZylinder;
-	fb_Ampelleuchte :FB_Ampelleuchte;
-	fb_Foerderband :FB_Foerderband;
-	fb_Dispenser_Rot :FB_Dispenser;
-	fb_Dispenser_Gruen :FB_Dispenser;
-	fb_Dispenser_Blau :FB_Dispenser;
+	fb_Ampelleuchte :FB_Ampelleuchte;	
+	fb_Abfuellmodul :FB_Abfuellmodul;
+	fb_Manipulator :FB_Manipulator;
 	
+	nState :INT :=0;
 	
-	
-	value : Real;
-	fb_Transport :FB_Transport;
+	fb_MQTT :FB_MQTT;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[value :=TO_UINT(FUN_Scale(4096,4096,0,350,0));
+      <ST><![CDATA[	
+fb_Ampelleuchte(eState:= , bAmpelGruen_out=> IFC_HW.bAmpelGrun, bAmpelRot_out=> IFC_HW.bAmpelRot, bAmpelGelb_out=> IFC_HW.bAmpelGelb);
+
+fb_Abfuellmodul(bEnable:= , bExecute:= , eState=> ); 
+fb_Manipulator(bEnable:= , bExecute:= , bGripperClosed=> IFC_HW.bGripperClosed, eState=> );
+
+IF fb_Abfuellmodul.eState = eBetriebszustand.Init OR fb_Manipulator.eState = eBetriebszustand.Init THEN
+	fb_Ampelleuchte.eState := eBetriebszustand.init;
+ELSIF fb_Abfuellmodul.eState = eBetriebszustand.ready AND fb_Manipulator.eState = eBetriebszustand.ready THEN
+	fb_Ampelleuchte.eState := eBetriebszustand.ready;
+ELSIF fb_Abfuellmodul.eState = eBetriebszustand.production OR fb_Manipulator.eState = eBetriebszustand.Production THEN
+	fb_Ampelleuchte.eState := eBetriebszustand.Production;
+ELSIF fb_Abfuellmodul.eState = eBetriebszustand.off AND fb_Manipulator.eState = eBetriebszustand.off THEN
+	fb_Ampelleuchte.eState := eBetriebszustand.off;
+ELSE 
+	fb_Ampelleuchte.eState := eBetriebszustand.Warning;
+END_IF
 
 
-
-fb_Vereinzelung(
-	bEnable:= IFC_HW.bEnable, 
-	bExecute:= IFC_HW.bExecute, 
-	bSens1:= IFC_HW.bEinzelSens1, 
-	bSens2:= IFC_HW.bEinzelSens2, 
-	bSens3:= IFC_HW.bEinzelSens3, 
-	bSens4:= IFC_HW.bBandSens1, 
-	eState=> , 
-	bGate1=> fb_EZylinder1.bGate, 
-	bGate2=> fb_EZylinder2.bGate);
+IF NOT IFC_HW.bEnable THEN
+	nState :=0;
+END_IF
+CASE nState Of
+	0://off
+	fb_Abfuellmodul.bEnable :=FALSE;
+	fb_Manipulator.bEnable :=FALSE;
 	
-fb_EZylinder1(bGate:= , bError:= , bR1=> IFC_HW.bR1AKT1, bR2=> IFC_HW.bR2AKT1);
-fb_EZylinder2(bGate:= , bError:= , bR1=> IFC_HW.bR1AKT2, bR2=> IFC_HW.bR2AKT2);
-
-//fb_Foerderband(
-//	bEnable:= IFC_HW.bEnable, 
-//	bExecute:= , 
-//	bHalt:= , 
-//	eState=> , 
-//	ax:= IFC_HW.ax_BandMotor);
+	IF IFC_HW.bEnable THEN
+		nstate:=1;
+	END_IF
 	
-//fb_Dispenser_Rot(
-//	bEnable:= IFC_HW.bEnable, 
-//	bExecute:= , 
-//	rDistance:= 60, 
-//	eState=> , 
-//	ax:= IFC_HW.ax_Extruder1);
+	1: //init
+	fb_Abfuellmodul.bEnable :=TRUE;
+	fb_Manipulator.bEnable :=TRUE;
 	
-//fb_Dispenser_Gruen(
-//	bEnable:= IFC_HW.bEnable, 
-//	bExecute:= IFC_HW.bBandSens2, 
-//	rDistance:= 60, 
-//	eState=> , 
-//	ax:= IFC_HW.ax_Extruder2);
-//	
-//fb_Dispenser_Blau(
-//	bEnable:= IFC_HW.bEnable, 
-//	bExecute:= IFC_HW.bBandSens3, 
-//	rDistance:= 60, 
-//	eState=> , 
-//	ax:= IFC_HW.ax_Extruder3);
-//	
-
-
-fb_Ampelleuchte(eState_Vereinzelung:= fb_Vereinzelung.eState, bAmpelGruen=> IFC_HW.bAmpelGrun, bAmpelRot=> IFC_HW.bAmpelRot, bAmpelGelb=> IFC_HW.bAmpelGelb);
+	IF fb_Abfuellmodul.eState = eBetriebszustand.Ready AND fb_Manipulator.eState = eBetriebszustand.Ready THEN
+		nState:=2;
+	END_IF
 	
+	2: //ready
+	IF IFC_HW.bExecute THEN
+		nstate :=21;
+	END_IF
+	
+	21: //bottle
+	fb_Abfuellmodul.bExecute :=TRUE;
+	
+	IF fb_Abfuellmodul.eState = eBetriebszustand.Done THEN
+		fb_Abfuellmodul.bExecute :=FALSE;
+		nstate :=22;
+	END_IF
+	
+	22: //mani
+	fb_Manipulator.bExecute :=TRUE;
+	
+	IF fb_Manipulator.eState = eBetriebszustand.Done THEN
+		fb_Manipulator.bExecute :=FALSE;
+		nState :=23;
+	END_IF
+	
+	23://done
+	IF NOT IFC_HW.bExecute THEN
+		nState:=2;
+	END_IF
+END_CASE
 
 
-
-//Transport als gesamtes
-fb_Transport(
-	bEnable:= IFC_HW.bEnable, 
-	bExecute:= IFC_HW.bExecute, 
-	nStation:= , 
-	bSens1:= IFC_HW.bBandSens1, 
-	bSens2:= IFC_HW.bBandSens2, 
-	bSens3:= IFC_HW.bBandSens3, 
-	bSens4:= IFC_HW.bBandSens4, 
-	eState=> , 
-	bStopper1=> IFC_HW.bBandHub1, 
-	bStopper2=> IFC_HW.bBandHub2, 
-	bStopper3=> IFC_HW.bBandHub3, 
-	ax:= IFC_HW.ax_BandMotor);
-
-]]></ST>
+fb_MQTT(data:= IFC_HW.bEnable);]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="102" Count="0" />
-      <LineId Id="155" Count="0" />
-      <LineId Id="154" Count="0" />
-      <LineId Id="91" Count="0" />
-      <LineId Id="93" Count="8" />
-      <LineId Id="90" Count="0" />
-      <LineId Id="103" Count="0" />
-      <LineId Id="107" Count="1" />
+      <LineId Id="256" Count="0" />
+      <LineId Id="249" Count="0" />
+      <LineId Id="153" Count="1" />
       <LineId Id="157" Count="0" />
-      <LineId Id="160" Count="4" />
-      <LineId Id="158" Count="0" />
-      <LineId Id="196" Count="0" />
-      <LineId Id="248" Count="4" />
-      <LineId Id="178" Count="0" />
-      <LineId Id="197" Count="0" />
-      <LineId Id="185" Count="4" />
-      <LineId Id="184" Count="0" />
-      <LineId Id="198" Count="0" />
-      <LineId Id="191" Count="4" />
-      <LineId Id="190" Count="0" />
-      <LineId Id="212" Count="0" />
-      <LineId Id="159" Count="0" />
-      <LineId Id="156" Count="0" />
-      <LineId Id="109" Count="0" />
-      <LineId Id="104" Count="0" />
-      <LineId Id="226" Count="3" />
-      <LineId Id="236" Count="11" />
-      <LineId Id="230" Count="1" />
+      <LineId Id="235" Count="0" />
+      <LineId Id="232" Count="0" />
+      <LineId Id="236" Count="0" />
+      <LineId Id="238" Count="2" />
+      <LineId Id="242" Count="0" />
+      <LineId Id="248" Count="0" />
+      <LineId Id="247" Count="0" />
+      <LineId Id="244" Count="2" />
+      <LineId Id="234" Count="0" />
+      <LineId Id="231" Count="0" />
+      <LineId Id="158" Count="44" />
       <LineId Id="132" Count="0" />
+      <LineId Id="251" Count="1" />
+      <LineId Id="250" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

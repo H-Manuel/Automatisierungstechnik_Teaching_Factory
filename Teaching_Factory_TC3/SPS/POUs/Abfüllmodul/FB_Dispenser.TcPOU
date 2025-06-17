@@ -61,7 +61,11 @@ mc_MoveRelative(
 	ErrorID=> );
 	
 
-IF NOT mc_Power.Status THEN
+//IF NOT mc_Power.Status THEN
+//	nState:=0;
+//END_IF
+
+IF NOT bEnable THEN
 	nState:=0;
 END_IF
 
@@ -128,7 +132,11 @@ END_CASE]]></ST>
       <LineId Id="184" Count="0" />
       <LineId Id="169" Count="14" />
       <LineId Id="166" Count="1" />
-      <LineId Id="76" Count="5" />
+      <LineId Id="76" Count="3" />
+      <LineId Id="298" Count="0" />
+      <LineId Id="297" Count="0" />
+      <LineId Id="299" Count="1" />
+      <LineId Id="80" Count="1" />
       <LineId Id="187" Count="2" />
       <LineId Id="277" Count="0" />
       <LineId Id="274" Count="0" />

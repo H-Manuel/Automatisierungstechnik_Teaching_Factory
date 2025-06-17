@@ -3,12 +3,15 @@
   <POU Name="FB_Ampelleuchte" Id="{05acc604-60aa-4730-a9ac-bd76128d45b8}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Ampelleuchte
 VAR_INPUT
-	eState_Vereinzelung : eBetriebszustand;
+	eState : eBetriebszustand;
 END_VAR
 VAR_OUTPUT
-	bAmpelGruen :BOOL;
-	bAmpelRot :BOOL;
-	bAmpelGelb :BOOL;
+
+	
+	bAmpelGruen_out :BOOL;
+	bAmpelRot_out :BOOL;
+	bAmpelGelb_out :BOOL;
+	
 END_VAR
 VAR
 	fb_BlinklichtGr :FB_Blinklicht;
@@ -17,10 +20,13 @@ VAR
 	AmpelGruenblinken:BOOL;
 	AmpelRotblinken :BOOL;
 	AmpelGelbblinken :BOOL;
+	bAmpelGruen :BOOL;
+	bAmpelRot :BOOL;
+	bAmpelGelb :BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[CASE eState_Vereinzelung OF
+      <ST><![CDATA[CASE eState OF
 	0: //OFF nicht Betriebsbereit
 	//keine Lampe leuchtet
 	bAmpelGruen :=FALSE;
@@ -103,9 +109,27 @@ END_VAR
 	AmpelGelbblinken :=FALSE;
 END_CASE
 
-fb_BlinklichtGb(bStartStop:= AmpelGelbblinken, tPeriod:= T#1S , bBlink=> bAmpelGelb);
-fb_BlinklichtGr(bStartStop:= AmpelGruenblinken, tPeriod:= T#1S, bBlink=> bAmpelGruen);
-fb_BlinklichtRt(bStartStop:= AmpelRotblinken, tPeriod:= T#1S, bBlink=> bAmpelRot);]]></ST>
+fb_BlinklichtGb(bStartStop:= AmpelGelbblinken, tPeriod:= T#1S , bBlink=> );
+fb_BlinklichtGr(bStartStop:= AmpelGruenblinken, tPeriod:= T#1S, bBlink=> );
+fb_BlinklichtRt(bStartStop:= AmpelRotblinken, tPeriod:= T#1S, bBlink=> );
+
+IF fb_BlinklichtGb.bBlink OR bAmpelGelb THEN
+	bAmpelGelb_out :=TRUE;
+ELSE
+	bAmpelGelb_out :=FALSE;
+END_IF
+IF fb_BlinklichtGr.bBlink OR bAmpelGruen THEN
+	bAmpelGruen_out :=TRUE;
+ELSE
+	bAmpelGruen_out :=FALSE;
+END_IF
+IF fb_BlinklichtRt.bBlink OR bAmpelRot THEN
+	bAmpelRot_out :=TRUE;
+ELSE
+	bAmpelRot_out :=FALSE;
+END_IF
+
+]]></ST>
     </Implementation>
     <LineIds Name="FB_Ampelleuchte">
       <LineId Id="9" Count="0" />
@@ -159,6 +183,16 @@ fb_BlinklichtRt(bStartStop:= AmpelRotblinken, tPeriod:= T#1S, bBlink=> bAmpelRot
       <LineId Id="60" Count="0" />
       <LineId Id="59" Count="0" />
       <LineId Id="61" Count="1" />
+      <LineId Id="138" Count="1" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="143" Count="1" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="146" Count="3" />
+      <LineId Id="145" Count="0" />
+      <LineId Id="151" Count="3" />
+      <LineId Id="150" Count="0" />
+      <LineId Id="140" Count="0" />
+      <LineId Id="137" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

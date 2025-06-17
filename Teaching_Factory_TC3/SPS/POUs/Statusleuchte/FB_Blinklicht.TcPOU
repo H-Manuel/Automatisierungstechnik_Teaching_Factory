@@ -40,10 +40,19 @@ END_IF
 	bLEDrot := FALSE;
 END_IF
 *)
+
+IF NOT bStartStop THEN
+	bBlink :=FALSE;
+END_IF
 ]]></ST>
     </Implementation>
     <LineIds Name="FB_Blinklicht">
-      <LineId Id="50" Count="21" />
+      <LineId Id="50" Count="4" />
+      <LineId Id="88" Count="0" />
+      <LineId Id="56" Count="15" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="89" Count="0" />
+      <LineId Id="91" Count="1" />
       <LineId Id="9" Count="0" />
     </LineIds>
   </POU>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <GVL Name="IFC_HW" Id="{6d93a28a-bcbe-4118-afde-16fb93b1555f}">
     <Declaration><![CDATA[// In dieser GVL werden alle Variablen deklariert die auf die realen Klemmen zugreifen
 VAR_GLOBAL

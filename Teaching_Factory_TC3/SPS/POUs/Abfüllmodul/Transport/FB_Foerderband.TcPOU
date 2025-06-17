@@ -84,6 +84,10 @@ Timer(IN:= , PT:= T#1S, Q=> , ET=> );
 //	nState:=0;
 //END_IF
 
+IF NOT bEnable THEN
+	nState :=0;
+END_IF
+
 CASE nState OF 
 	0:
 	eState:=eBetriebszustand.Off;
@@ -180,6 +184,10 @@ END_CASE]]></ST>
       <LineId Id="211" Count="0" />
       <LineId Id="21" Count="0" />
       <LineId Id="44" Count="1" />
+      <LineId Id="232" Count="0" />
+      <LineId Id="231" Count="0" />
+      <LineId Id="235" Count="0" />
+      <LineId Id="234" Count="0" />
       <LineId Id="22" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="23" Count="0" />
