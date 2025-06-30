@@ -29,7 +29,7 @@ VAR_IN_OUT
 	ax : AXIS_REF;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//nur Eingänge werden beschreiben 
+      <ST><![CDATA[//nur Eingänge werden beschreiben
 fb_TransportE(
 	bSens1:= bSens1, 
 	bSens2:= bSens2, 

@@ -61,10 +61,6 @@ mc_MoveRelative(
 	ErrorID=> );
 	
 
-//IF NOT mc_Power.Status THEN
-//	nState:=0;
-//END_IF
-
 IF NOT bEnable THEN
 	nState:=0;
 END_IF
@@ -85,7 +81,6 @@ CASE nState OF
 	10: // init Reset
 	eState:=eBetriebszustand.Init;
 	mc_Reset.Execute:=TRUE;
-	//mc_Power.Enable:=FALSE;
 	
 	IF mc_Reset.Done THEN
 		nState:=11;
@@ -132,7 +127,6 @@ END_CASE]]></ST>
       <LineId Id="184" Count="0" />
       <LineId Id="169" Count="14" />
       <LineId Id="166" Count="1" />
-      <LineId Id="76" Count="3" />
       <LineId Id="298" Count="0" />
       <LineId Id="297" Count="0" />
       <LineId Id="299" Count="1" />
@@ -140,7 +134,8 @@ END_CASE]]></ST>
       <LineId Id="187" Count="2" />
       <LineId Id="277" Count="0" />
       <LineId Id="274" Count="0" />
-      <LineId Id="190" Count="18" />
+      <LineId Id="190" Count="9" />
+      <LineId Id="201" Count="7" />
       <LineId Id="278" Count="0" />
       <LineId Id="209" Count="0" />
       <LineId Id="275" Count="0" />

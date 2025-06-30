@@ -34,7 +34,7 @@ IF NOT bEnable THEN
 END_IF
 
 CASE nState OF
-	100: //Off oder nicht BEtriebsbereit 
+	100: //Off oder nicht Betriebsbereit 
 	eState:=eBetriebszustand.Off;
 	
 	IF bSens1 AND bEnable THEN

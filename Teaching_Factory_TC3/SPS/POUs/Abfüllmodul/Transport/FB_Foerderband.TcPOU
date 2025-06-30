@@ -138,7 +138,7 @@ CASE nState OF
 		nState :=31;
 	END_IF
 	
-	31: //TON verzögerung dass flasche noch bis zum anschlag fährt
+	31: //TON verzögerung sodass Flasche noch bis zum Anschlag fährt
 	eState :=eBetriebszustand.Production;
 	Timer.IN:=TRUE;
 	

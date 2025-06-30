@@ -79,10 +79,6 @@ mc_Reset(
 	Busy=> , 
 	Error=> , 
 	ErrorID=> );
-	
-//IF NOT mc_Power.Status THEN
-//	nState:=0;
-//END_IF
 
 IF NOT bEnable THEN
 	nState :=0;
@@ -106,7 +102,6 @@ CASE nState OF
 	10: // init Reset
 	eState:=eBetriebszustand.Init;
 	mc_Reset.Execute:=TRUE;
-	//mc_Power.Enable:=FALSE;
 	
 	IF mc_Reset.Done THEN
 		nState:=11;
@@ -116,9 +111,7 @@ CASE nState OF
 	11: // init Power
 	eState:=eBetriebszustand.Init;
 	
-	mc_Power.Enable :=TRUE;
-	//mc_Power.Enable_Positive:=TRUE;
-	
+	mc_Power.Enable :=TRUE;	
 	
 	IF mc_Power.Status THEN
 		nState:=12;
@@ -185,16 +178,16 @@ END_CASE
       <LineId Id="72" Count="0" />
       <LineId Id="66" Count="5" />
       <LineId Id="65" Count="0" />
-      <LineId Id="92" Count="0" />
-      <LineId Id="96" Count="2" />
       <LineId Id="230" Count="2" />
       <LineId Id="229" Count="0" />
       <LineId Id="99" Count="4" />
       <LineId Id="205" Count="1" />
       <LineId Id="204" Count="0" />
-      <LineId Id="105" Count="14" />
+      <LineId Id="105" Count="10" />
+      <LineId Id="117" Count="2" />
       <LineId Id="181" Count="0" />
-      <LineId Id="120" Count="11" />
+      <LineId Id="120" Count="5" />
+      <LineId Id="128" Count="3" />
       <LineId Id="156" Count="5" />
       <LineId Id="163" Count="1" />
       <LineId Id="162" Count="0" />

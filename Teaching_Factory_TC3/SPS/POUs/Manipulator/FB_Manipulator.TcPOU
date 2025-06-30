@@ -70,7 +70,7 @@ CASE nState OF
 		nState:=2;
 	END_IF
 	
-	2://home //vlt auch heir 2
+	2://home 
 	eState:=eBetriebszustand.Init;
 	nStation :=0;
 	fb_Roboter.bExecute :=TRUE;
@@ -87,7 +87,7 @@ CASE nState OF
 	20: //Ready
 	IF nstation =7 THEN
 		eState:=eBetriebszustand.Stop;
-		//zusätzlicher state  bei dem man nur mit quittierung rauskommt 
+		//zusätzlicher State  bei dem man nur mit quittierung rauskommt 
 	ELSE
 			eState:=eBetriebszustand.Ready;
 	END_IF
@@ -122,7 +122,7 @@ CASE nState OF
 	
 	23: //close Gripper
 	eState:=eBetriebszustand.Production;
-	fb_Roboter_Gripper.rPosition := 19.4; //geschlossen;
+	fb_Roboter_Gripper.rPosition := 9.4; //geschlossen;
 	fb_Roboter_Gripper.bExecute :=TRUE;
 	bGripperClosed :=TRUE;
 	

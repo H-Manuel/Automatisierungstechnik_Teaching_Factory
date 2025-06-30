@@ -30,8 +30,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//Zustandsgraphen aus PP selber gezeichent implementieren 
-
+      <ST><![CDATA[
 IF NOT bEnable THEN
 	nState :=0;
 END_IF
@@ -113,7 +112,6 @@ CASE nState OF
 END_CASE]]></ST>
     </Implementation>
     <LineIds Name="FB_Transport_Logik">
-      <LineId Id="9" Count="0" />
       <LineId Id="139" Count="0" />
       <LineId Id="141" Count="1" />
       <LineId Id="140" Count="0" />
