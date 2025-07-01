@@ -53,8 +53,12 @@ CASE nState Of
 	END_IF
 	
 	2: //ready
-	IF IFC_HW.bExecute THEN
+	IF IFC_HW.bExecute AND iFC_HW.bEinzelSens1 THEN
 		nstate :=21;
+	END_IF
+	IF NOT iFC_HW.bEinzelSens2 AND NOT iFC_HW.bEinzelSens1 THEN
+		fb_Abfuellmodul.bEnable :=FALSE;
+		nState :=1;
 	END_IF
 	
 	21: //bottle
@@ -97,7 +101,11 @@ fb_MQTT(data:= IFC_HW.bEnable);]]></ST>
       <LineId Id="244" Count="2" />
       <LineId Id="234" Count="0" />
       <LineId Id="231" Count="0" />
-      <LineId Id="158" Count="44" />
+      <LineId Id="158" Count="23" />
+      <LineId Id="267" Count="1" />
+      <LineId Id="270" Count="0" />
+      <LineId Id="269" Count="0" />
+      <LineId Id="182" Count="20" />
       <LineId Id="132" Count="0" />
       <LineId Id="251" Count="1" />
       <LineId Id="250" Count="0" />
